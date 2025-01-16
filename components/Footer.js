@@ -2,8 +2,8 @@ import styled from "styled-components";
 import Link from "next/link";
 
 const FooterContainer = styled.footer`
-  background-color: #222; // Matches the dark theme
-  color: #aaa;
+  background-color: var(--bg-dark, #222); // Use CSS variables for colors
+  color: var(--text-muted, #aaa);
   padding: 5px 0;
   font-size: 0.9rem;
   text-align: center;
@@ -27,15 +27,16 @@ const FooterWrapper = styled.div`
 
 const FooterNav = styled.nav`
   display: flex;
-  gap: 40px;
+  flex-wrap: wrap; // Wrap links for smaller screens
+  gap: 20px;
 
   a {
-    color: #aaa;
+    color: var(--text-muted, #aaa);
     text-decoration: none;
     transition: color 0.3s ease;
 
     &:hover {
-      color: #fff;
+      color: var(--text-light, #fff);
     }
   }
 `;
@@ -44,40 +45,42 @@ const FooterBrand = styled.div`
   font-size: 1rem;
 
   span {
-    color: #555; // Slightly different shade for style
+    color: var(--accent-muted, #555);
   }
 `;
 
 const FooterSocial = styled.div`
   display: flex;
-  gap: 20px; // Increased gap for better spacing
+  gap: 20px;
 
   a {
-    color: #aaa;
+    color: var(--text-muted, #aaa);
     transition: color 0.3s ease;
 
     &:hover {
-      color: #fff;
+      color: var(--text-light, #fff);
     }
   }
 
   img {
-    width: 24px; // Adjust size for visibility
+    width: 24px;
     height: 24px;
-    transition: transform 0.3s ease; // Smooth scaling on hover
+    transition: transform 0.3s ease;
   }
 
   img:hover {
-    transform: scale(1.2); // Slight scaling effect on hover
+    transform: scale(1.2);
   }
 `;
 
 export default function Footer() {
+  const currentYear = new Date().getFullYear();
+
   return (
     <FooterContainer>
       <FooterWrapper>
         <FooterBrand>
-          Paintables <span>© {new Date().getFullYear()}</span>
+          Paintables <span>© {currentYear}</span>
         </FooterBrand>
 
         <FooterNav>
@@ -88,16 +91,36 @@ export default function Footer() {
         </FooterNav>
 
         <FooterSocial>
-          <a href="https://facebook.com" target="_blank" rel="noreferrer">
+          <a
+            href="https://facebook.com"
+            target="_blank"
+            rel="noreferrer"
+            title="Visit us on Facebook"
+          >
             <img src="/facebook.svg" alt="Facebook" />
           </a>
-          <a href="https://twitter.com" target="_blank" rel="noreferrer">
+          <a
+            href="https://twitter.com"
+            target="_blank"
+            rel="noreferrer"
+            title="Follow us on Twitter"
+          >
             <img src="/twitter.svg" alt="Twitter" />
           </a>
-          <a href="https://instagram.com" target="_blank" rel="noreferrer">
+          <a
+            href="https://instagram.com"
+            target="_blank"
+            rel="noreferrer"
+            title="Check out our Instagram"
+          >
             <img src="/instagram.svg" alt="Instagram" />
           </a>
-          <a href="https://youtube.com" target="_blank" rel="noreferrer">
+          <a
+            href="https://youtube.com"
+            target="_blank"
+            rel="noreferrer"
+            title="Subscribe to our YouTube channel"
+          >
             <img src="/youtube.svg" alt="YouTube" />
           </a>
         </FooterSocial>

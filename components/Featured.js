@@ -24,7 +24,7 @@ const Title = styled.h1`
 
 const Desc = styled.p`
   color: #aaa;
-  font-size: .8rem;
+  font-size: 0.8rem;
 `;
 
 const ColumnsWrapper = styled.div`
@@ -45,9 +45,6 @@ const ColumnsWrapper = styled.div`
     div:nth-child(1) {
       order: 0;
     }
-    img {
-      max-width: 100%;
-    }
   }
 `;
 
@@ -62,37 +59,38 @@ const ButtonsWrapper = styled.div`
   margin-top: 25px;
 `;
 
-// Add hover effects for the buttons
-const HoverButtonLink = styled(ButtonLink)`
+// Unified hover styles for buttons
+const HoverStyles = `
   transition: all 0.3s ease;
   &:hover {
-    background-color: #555;  // Change to grey on hover
+    background-color: #555;
     color: white;
-    transform: scale(1.05);  // Slightly grow on hover
+    transform: scale(1.05);
   }
-     &:active {
-    transform: scale(0.97); /* Slight shrink on click */
+  &:active {
+    transform: scale(0.97);
   }
 `;
 
+const HoverButtonLink = styled(ButtonLink)`
+  ${HoverStyles}
+`;
+
 const HoverButton = styled(Button)`
-  transition: all 0.3s ease;
-  &:hover {
-    background-color: #555;  // Change to grey on hover
-    color: white;
-    transform: scale(1.05);  // Slightly grow on hover
-  }
-     &:active {
-    transform: scale(0.97); /* Slight shrink on click */
-  }
+  ${HoverStyles}
 `;
 
 export default function Featured({ product }) {
   const { addProduct } = useContext(CartContext);
+
   function addFeaturedToCart() {
-    addProduct(product._id);
+    if (product?._id) {
+      addProduct(product._id);
+    } else {
+      console.error("Product ID is missing.");
+    }
   }
-  
+
   return (
     <Bg>
       <Center>
@@ -102,7 +100,7 @@ export default function Featured({ product }) {
               <Title>{product.title}</Title>
               <Desc>{product.description}</Desc>
               <ButtonsWrapper>
-                <HoverButtonLink href={'/product/' + product._id} outline={1} white={1}>
+                <HoverButtonLink href={`/product/${product._id}`} outline={1} white={1}>
                   Read more
                 </HoverButtonLink>
                 <HoverButton white onClick={addFeaturedToCart}>
@@ -113,7 +111,7 @@ export default function Featured({ product }) {
             </div>
           </Column>
           <Column>
-            <img src="https://yannickwebdev-ecommerce.s3.amazonaws.com/1734277372714.png" alt="" />
+            <img src={product.image} alt={product.title || "Product Image"} />
           </Column>
         </ColumnsWrapper>
       </Center>
